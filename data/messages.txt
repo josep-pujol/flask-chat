@@ -2,3 +2,4 @@
 19:47:56 Collin: Hello
 19:48:08 Sue: Hi Collin
 19:48:33 Collin: asdf asd faasdf asdfasdfsadfasdfasdfasdfadsf
+20:10:56 Collin: after refractoring
