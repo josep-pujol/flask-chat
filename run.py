@@ -30,8 +30,12 @@ def get_all_messages():
 def index():
     '''Main page with instructions'''
     if request.method == 'POST':
-        write_to_file('data/users.txt', request.form['username'] + '\n')
-        return redirect(request.form['username'])
+        session['username'] = request.form['username']
+    
+    if 'username' in session:
+        #write_to_file('data/users.txt', request.form['username'] + '\n')
+        #return redirect(request.form['username'])
+        return redirect(session['username'])
     return render_template('index.html')
 
 
