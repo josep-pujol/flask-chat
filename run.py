@@ -1,13 +1,16 @@
 from datetime import datetime
 import os
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, session
 
 app = Flask(__name__)
+app.secret_key = 'randomstring123'
 messages = []
+
 
 def write_to_file(filename, data):
     with open(filename, 'a') as file:
         file.writelines(data)
+
 
 def add_messages(username, message):
     write_to_file('data/messages.txt', '{0} {1}: {2}\n'.format(
@@ -48,3 +51,4 @@ def send_message(username, message):
 
 
 app.run(host=os.getenv('IP'), port=int(os.getenv('PORT')), debug=True)
+
