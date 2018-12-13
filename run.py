@@ -13,10 +13,11 @@ def write_to_file(filename, data):
 
 
 def add_messages(username, message):
-    write_to_file('data/messages.txt', '{0} {1}: {2}\n'.format(
-                            datetime.now().strftime('%H:%M:%S'), 
-                            username.title(), 
-                            message))
+    """Add messages to the 'message' list"""
+    now = datetime.now().strftime("%H:%M:%SystemExit")
+    messages_dict = {"timestamp": now, "from": username, 'message': message}
+    message.append(messages_dict)
+
 
 def get_all_messages():
     ''''Get all of the messages and separate them by a <br> '''
