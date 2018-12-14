@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
 app.secret_key = 'randomstring123'
@@ -12,11 +12,10 @@ def write_to_file(filename, data):
         file.writelines(data)
 
 
-def add_messages(username, message):
-    """Add messages to the 'message' list"""
-    now = datetime.now().strftime("%H:%M:%SystemExit")
-    messages_dict = {"timestamp": now, "from": username, 'message': message}
-    message.append(messages_dict)
+def add_message(username, message):
+    """Add message to the 'messages' list"""
+    now = datetime.now().strftime("%H:%M:%S")
+    messages.append({"timestamp": now, "from": username, 'message': message})
 
 
 def get_all_messages():
@@ -36,23 +35,21 @@ def index():
     if 'username' in session:
         #write_to_file('data/users.txt', request.form['username'] + '\n')
         #return redirect(request.form['username'])
-        return redirect(session['username'])
+        return redirect(url_for("user", username=session["username"]))
     return render_template('index.html')
 
 
-@app.route('/<username>')
+@app.route('/chat/<username>', methods=['GET', 'POST'])
 def user(username):
-    '''Display chat messages'''
-    messages = get_all_messages()
+    '''Display and add chat messages'''
+    if request.method == "POST":
+        username = session["username"]
+        message = request.form["message"]
+        add_message(username, message)
+        return redirect(url_for("user", username=session["username"]))
+        
     return render_template('chat.html', 
                             username=username, chat_messages=messages)
-
-
-@app.route('/<username>/<message>')
-def send_message(username, message):
-    '''Create a new message and redirect back to the chat page'''
-    add_messages(username, message)
-    return redirect(username)
 
 
 app.run(host=os.getenv('IP'), port=int(os.getenv('PORT')), debug=True)
