@@ -7,23 +7,11 @@ app.secret_key = 'randomstring123'
 messages = []
 
 
-def write_to_file(filename, data):
-    with open(filename, 'a') as file:
-        file.writelines(data)
-
 
 def add_message(username, message):
     """Add message to the 'messages' list"""
     now = datetime.now().strftime("%H:%M:%S")
     messages.append({"timestamp": now, "from": username, 'message': message})
-
-
-def get_all_messages():
-    ''''Get all of the messages and separate them by a <br> '''
-    messages = []
-    with open('data/messages.txt', 'r') as chat_messages:
-        messages = chat_messages.readlines()
-    return messages
 
 
 @app.route('/', methods=['GET', 'POST'])
