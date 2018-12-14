@@ -21,8 +21,6 @@ def index():
         session['username'] = request.form['username']
     
     if 'username' in session:
-        #write_to_file('data/users.txt', request.form['username'] + '\n')
-        #return redirect(request.form['username'])
         return redirect(url_for("user", username=session["username"]))
     return render_template('index.html')
 
